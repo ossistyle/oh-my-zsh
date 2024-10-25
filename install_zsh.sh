@@ -16,6 +16,7 @@ prepare_zsh()
     install_ohmyzsh
     cp zshrc $HOME/.zshrc
     cp -r zsh $HOME/.zsh
+    cp antigen.zsh $HOME/.antigen.zsh
     sudo chsh "$USER" -s /usr/bin/zsh
 }
 
@@ -92,7 +93,6 @@ install_tools()
     os_install tree
     os_install btop
     os_install bat
-    os_install shellcheck
     os_install python3
     os_install ripgrep
 
@@ -108,11 +108,12 @@ install_all()
 
 update_conf()
 {
-    if ! [ -f "tmux.conf" ]; then
-        echo "update_conf should be executed under the dofile dir."
-        return
-    fi
-    cp tmux.conf $HOME/.tmux.conf
+    # if ! [ -f "tmux.conf" ]; then
+    #     echo "update_conf should be executed under the dofile dir."
+    #     return
+    # fi
+    # cp tmux.conf $HOME/.tmux.conf
+
     if [ -d $HOME/.zsh ]; then
         echo "remove ~/.zsh dir"
         rm -rf $HOME/.zsh
@@ -124,8 +125,8 @@ update_conf()
         echo "update zsh.local, for local usage"
         cp zsh.local $HOME/.zsh.local
     fi
-    echo "update configure of zsh & tmux done"
+    echo "update configure of zsh"
 
-    echo "update $HOME/.python_startup.py, for python startup"
-    cp python/startup.py $HOME/.python_startup.py
+    # echo "update $HOME/.python_startup.py, for python startup"
+    # cp python/startup.py $HOME/.python_startup.py
 }
