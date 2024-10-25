@@ -1,11 +1,3 @@
-# Install Antigen
-if [[ ! -a ~/.antigen/antigen.zsh ]]; then
-    git clone --branch master git@github.com:zsh-users/antigen.git ~/.antigen
-    # @see https://github.com/zsh-users/antigen/issues/583
-    cd ~/.antigen 
-    git checkout v2.2.3 
-    cd -
-fi
 
 source ~/.antigen/antigen.zsh
 
@@ -30,4 +22,4 @@ EOBUNDLES
 antigen theme romkatv/powerlevel10k
 
 # Tell Antigen that you're done.
-antigen apply
+antigen apply 

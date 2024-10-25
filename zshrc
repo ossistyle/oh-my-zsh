@@ -1,5 +1,4 @@
-
-# # If you come from bash you might have to change your $PATH.
+# # If yo come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -153,4 +152,4 @@ alias tree='eza --tree $eza_params'
 if [ -f ~/.scripts/tunnel.sh ]; then
   alias tunnel='~/.scripts/tunnel.sh'
   alias tkill='pkill -f "ssh -f -L"'
-fi
+fiu
