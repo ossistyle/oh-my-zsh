@@ -16,10 +16,22 @@ prepare_zsh()
     install_ohmyzsh
     cp zshrc $HOME/.zshrc
     cp -r zsh $HOME/.zsh
-    cp antigen.zsh $HOME/.antigen.zsh
+    # cp antigen.zsh $HOME/.antigen.zsh
+    install_zsh_plugins
+    install_zsh_theme
     sudo chsh "$USER" -s /usr/bin/zsh
+}
 
-    echo "Prepare zsh finished"
+install_zsh_plugins()
+{
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    git clone https://github.com/Aloxaf/fzf-tab ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fzf-tab
+}
+
+install_zsh_theme()
+{
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 }
 
 prepare_local()
@@ -95,14 +107,13 @@ install_fd()
         brew install fd
     elif [ "$OS_DISTRIBUTION" = "ubuntu" ]; then
         sudo apt install -y fd-find
-        ln -sd $(which fdfind) $HOME/.local/bin/fd
+        ln -sf $(which fdfind) $HOME/.local/bin/fd
     fi
 }
 
 omz_complete()
 {
-    cp "$ZSH/plugins/docker/completions/_docker" "$ZSH_CACHE_DIR/completions"
-    cp "$HOME/.zsh/Completion/_conda" "$ZSH_CACHE_DIR/completions"
+    cp "$ZSH/plugins/docker/completions/_docker" "$ZSH_CACHE_DIR/completions"    
 }
 
 install_tools()
@@ -112,19 +123,21 @@ install_tools()
     os_install bat
     os_install python3
     os_install ripgrep
+    os_install pkgconf 
 
     install_fd
-
-    install_fzf
-    install_antigen    
+    install_zoxide
+    install_eza
+    install_fzf    
 }
 
 install_all()
 {
     prepare_local
-    prepare_zsh	
-    install_eza
+    prepare_zsh	    
 	install_tools	
+
+    rm -f ~/.zcompdump; compinit  # clear zsh completion cache
 }
 
 update_conf()
@@ -141,8 +154,7 @@ update_conf()
     fi
     cp zshrc $HOME/.zshrc
     cp -r zsh $HOME/.zsh
-    cp antigen.zsh $HOME/.antigen.zsh
-
+    
     if ! [ -f "$HOME/.zsh.local" ]; then
         echo "update zsh.local, for local usage"
         cp zsh.local $HOME/.zsh.local

@@ -13,9 +13,6 @@ function safe_export_path() {
     fi
 }
 
-# If yo come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -26,18 +23,53 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Load fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# export zsh is important
+export ZSH="$HOME/.oh-my-zsh"
+
+# zsh config
+zstyle ':omz:update' mode auto
+zstyle ':omz:update' frequency 7
+
+setopt complete_aliases  # enable alias completion
+
+LESSOPEN="|/usr/local/bin/lesspipe.sh %s"; 
+export LESSOPEN
+
+# zsh history settings
+export HISTFILE=$HOME/.zsh_history
+export HISTSIZE=100000
+export SAVEHIST=80000
+setopt INC_APPEND_HISTORY    # append history as soon as the command is executed
+setopt HIST_IGNORE_DUPS      # don't record an entry that was just recorded again
+setopt HIST_IGNORE_SPACE     # don't save commands that start with a space
+setopt HIST_FIND_NO_DUPS     # don't display duplicates in history search
+setopt HIST_NO_FUNCTIONS     # don't save function definitions in the history file
+setopt SHARE_HISTORY         # share history between all sessions
+unsetopt EXTENDED_HISTORY    # disable the extended history format that includes timestamp information for each command
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    fzf-tab
+    docker
+    docker-compose
+)
 
 # Load fastfetch
 #if [[ -o interactive ]]; then
 #     fastfetch
 #fi
-
-# Load antigen (plugins, themes)
-[ -f ~/.antigen.zsh ] && source ~/.antigen.zsh
-
-setopt complete_aliases  # enable alias completion
 
 # alias and self defined function
 safe_export_path $HOME/.local/bin >/dev/null
@@ -50,46 +82,13 @@ done
 
 safe_add_fpath "$HOME/.zsh/Completion"
 safe_add_fpath "$HOME/.zsh/functions"
+safe_add_fpath "$HOME/bin"
+safe_add_fpath "$HOME/.local/bin"
+safe_add_fpath "/usr/local/bin"
 
 safe_source "$HOME"/.fzf.zsh
 safe_source "$HOME"/.zsh.local  # local file is used to store local configuration
 
-###########################
-#       Configuration     #
-###########################
 
-# FZF Configuration
-# Use ~~ as the trigger sequence instead of the default **
-export FZF_COMPLETION_TRIGGER=''
-
-# Options to fzf command
-export FZF_COMPLETION_OPTS='--border --info=inline'
-
-# Use fd (https://github.com/sharkdp/fd) for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-# _fzf_compgen_path() {
-#   fdfind --hidden --follow --exclude ".git" . "$1"
-# }
-
-# Use fd to generate the list for directory completion
-# _fzf_compgen_dir() {
-#   fdfind --type d --hidden --follow --exclude ".git" . "$1"
-# }
-
-# Advanced customization of fzf options via _fzf_comprun function
-# - The first argument to the function is the name of the command.
-# - You should make sure to pass the rest of the arguments to fzf.
-_fzf_comprun() {
-  local command=$1
-  shift
-
-  case "$command" in
-    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
-    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
-    ssh)          fzf --preview 'dig {}'                   "$@" ;;
-    *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
-  esac
-}
 
 

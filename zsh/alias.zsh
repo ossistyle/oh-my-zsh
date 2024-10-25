@@ -1,46 +1,14 @@
 
 # global aliases
-alias -g L="| less"
-alias -g JL="| jq | less"
-alias -g CL="| pygmentize | less"
-alias -g X="| xargs"
-alias -g B='|sed -r "s:\x1B\[[0-9;]*[mK]::g"'       # remove color, make things boring
-alias -g N='>/dev/null'
-alias -g NN='>/dev/null 2>&1'
-alias -g F="| fzf"
-alias -g H="--help"
-
-which tac NN && {
-    alias -g R="| tac"
-} || {
-    alias -g R="| tail -r"
-}
-
-which rg NN && {
-    alias -g G='| rg'
-    alias ag='rg -i'
-    alias agp='rg -i -tpy'
-} || {
-    which ag NN && {
-        alias -g G='| ag'
-        alias agp='ag --python'
-    } || alias -g G='| grep'
-}
-
-which pbcopy NN && {
-    alias -g C="| pbcopy"
-    function copy() { cat "${1:-/dev/stdin}" | pbcopy; }
-} || {
-    which xclip NN && {
-        alias -g C='| xclip -selection clipboard'
-        function copy() { cat "${1:-/dev/stdin}" | xclip -selection clipboard -in &>/dev/null &|; }
-    } || {
-        alias copy="yank"
-        alias -g C='| yank'
-    }
-}
-
-which dc NN || alias dc="cd"  # miss-type correction
+# alias -g L="| less"
+# alias -g JL="| jq | less"
+# alias -g CL="| pygmentize | less"
+# alias -g X="| xargs"
+# alias -g B='|sed -r "s:\x1B\[[0-9;]*[mK]::g"'       # remove color, make things boring
+# alias -g N='>/dev/null'
+# alias -g NN='>/dev/null 2>&1'
+# alias -g F="| fzf"
+# alias -g H="--help"
 
 # file
 alias 'rm!'="rm -rf"
@@ -50,7 +18,10 @@ alias sv="sudo vim"
 alias vi="vim"
 alias v="vim"
 alias c="clear"
+# zoxide config
+alias cd="z"
 alias cat="batcat"
+alias bat="batcat"
 alias icat="imgcat"
 alias rp="realpath"
 alias rf="readlink -f"
@@ -78,12 +49,12 @@ alias tarzip="tar -zcvf"
 alias tarunzip="tar -zxvf"
 
 # system
-alias cn_tz="TZ=Asia/Shanghai date"  # cn time zone
-alias zh_cn="LC_ALL='zh_CN.UTF-8'"  # encode
+alias cn_tz="TZ=Europe/Berlin date"  # cn time zone
+alias zh_cn="LC_ALL='en_US.UTF-8'"  # encode
 alias cursor="echo -e '\033[?25h'"
 alias which="which -a"
 alias m="make"
-alias font="fc-list :lang=zh"
+alias font="fc-list :lang=de"
 
 ## pretty print the $PATH
 alias path='echo $PATH | tr -s ":" "\n"'
@@ -124,21 +95,3 @@ alias gcf_mir='git config --global url."https://gitclone.com/".insteadOf https:/
 alias gcf_rst_mir='git config --global --unset url.https://gitclone.com/.insteadOf'
 alias git_ls_unreachable='git fsck --unreachable --no-reflog'
 
-# download
-alias vget="you-get"
-alias vgetl="you-get --playlist"
-
-# tmux alias
-alias ta="tmux a || tmux"
-alias tn="tmux new -s"
-
-# OS specific aliases
-if [ "$OS_DISTRIBUTION" = "arch" ]; then
-	alias yS="yaourt -S --noconfirm --needed"
-	alias ySs="yaourt -Ss"
-	alias pS="sudo pacman -S --noconfirm --needed"
-	alias pSs="sudo pacman -Ss"
-elif [ "$OS_DISTRIBUTION" = "macos" ]; then   # MacOS specific aliases
-    # example: app_name /Applications/Visual\ Studio\ Code.app
-    alias app_name="mdls -name kMDItemCFBundleIdentifier"
-fi
