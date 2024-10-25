@@ -18,23 +18,33 @@ prepare_zsh()
     cp -r zsh $HOME/.zsh
     cp antigen.zsh $HOME/.antigen.zsh
     sudo chsh "$USER" -s /usr/bin/zsh
+
+    echo "Prepare zsh finished"
 }
 
 install_antigen()
 {
-if [[ ! -a ~/.antigen/antigen.zsh ]]; then
-    git clone --branch master git@github.com:zsh-users/antigen.git ~/.antigen
-    # @see https://github.com/zsh-users/antigen/issues/583
-    cd ~/.antigen 
-    git checkout v2.2.3 
-    cd ~
-fi
+    if [[ ! -a ~/.antigen/antigen.zsh ]]; then
+        git clone --branch master git@github.com:zsh-users/antigen.git ~/.antigen
+        # @see https://github.com/zsh-users/antigen/issues/583
+        cd ~/.antigen 
+        git checkout v2.2.3 
+        cd ~
+    fi
+}
+
+install_zoxide()
+{
+    if [ ! -x "$(command -v zoxide)" ]; then
+        curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh  
+    fi
 }
 
 install_eza()
 {
 	sudo apt install -y gpg
 	sudo mkdir -p /etc/apt/keyrings
+    sudo rm -f /etc/apt/keyrings/gierens.gpg
 	wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
 	echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
 	sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
@@ -45,7 +55,6 @@ install_eza()
 install_ohmyzsh()
 {
     sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    install_antigen
 }
 
 install_miniconda()
@@ -82,6 +91,7 @@ install_fd()
         ln -s $(which fdfind) $HOME/.local/bin/fd
     fi
 }
+
 omz_complete()
 {
     cp "$ZSH/plugins/docker/completions/_docker" "$ZSH_CACHE_DIR/completions"
@@ -96,7 +106,10 @@ install_tools()
     os_install python3
     os_install ripgrep
 
+    install_fd
+
     install_fzf
+    install_antigen    
 }
 
 install_all()

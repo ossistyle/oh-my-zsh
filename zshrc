@@ -11,26 +11,12 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-if [ ! -f ~/.oh-my-zsh ]; thenn
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-fi
-
-
 #################
 #       FZF     #
 #################
 
 # Load fzf
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# Install fzf local
-# if [ ! -x "$(command -v fzf)" ]; then    
-#     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf    
-#     ~/.fzf/install    
-# fi
-# Set up fzf key bindings and fuzzy completion
-# source <(fzf --zsh)
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 #####################
 #       Fastfetch   #
@@ -40,8 +26,6 @@ fi
 #if [[ -o interactive ]]; then
 #     fastfetch
 #fi
-
-# zstyle ':omz:plugins:docker' legacy-completion yes
 
 #####################
 #       Antigen     #
@@ -54,28 +38,9 @@ fi
 #       Zoxide      #
 #####################
 
-#if [ ! -x "$(command -v zoxide)" ]; then
-#    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh  
-#fi
-
 # init zoxide
 # eval "$(zoxide init zsh)"
 # alias cd='z'
-
-#################
-#	EZA	#
-#################
-
-if [ ! -x "$(command -v zoxide)" ]; then
-	sudo apt update
-	sudo apt install -y gpg
-	sudo mkdir -p /etc/apt/keyrings
-	wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-	echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
-	sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
-	sudo apt update
-	sudo apt install -y eza
-fi
 
 #####################
 #       Aliases     #
