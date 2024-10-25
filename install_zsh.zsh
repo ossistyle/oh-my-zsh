@@ -22,6 +22,13 @@ prepare_zsh()
     echo "Prepare zsh finished"
 }
 
+prepare_local()
+{
+    if [ ! -d "$HOME/.local/bin" ]; then
+        mkdir $HOME/.local/bin
+    fi
+}
+
 install_antigen()
 {
     if [[ ! -a ~/.antigen/antigen.zsh ]]; then
@@ -88,7 +95,7 @@ install_fd()
         brew install fd
     elif [ "$OS_DISTRIBUTION" = "ubuntu" ]; then
         sudo apt install -y fd-find
-        ln -s $(which fdfind) $HOME/.local/bin/fd
+        ln -sd $(which fdfind) $HOME/.local/bin/fd
     fi
 }
 
@@ -114,6 +121,7 @@ install_tools()
 
 install_all()
 {
+    prepare_local
     prepare_zsh	
     install_eza
 	install_tools	
@@ -133,6 +141,7 @@ update_conf()
     fi
     cp zshrc $HOME/.zshrc
     cp -r zsh $HOME/.zsh
+    cp antigen.zsh $HOME/.antigen.zsh
 
     if ! [ -f "$HOME/.zsh.local" ]; then
         echo "update zsh.local, for local usage"

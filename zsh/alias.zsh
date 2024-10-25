@@ -49,7 +49,8 @@ alias cp="cp -r"
 alias sv="sudo vim"
 alias vi="vim"
 alias v="vim"
-alias c="cat"
+alias c="clear"
+alias cat="batcat"
 alias icat="imgcat"
 alias rp="realpath"
 alias rf="readlink -f"
@@ -57,6 +58,15 @@ alias findname="find . -name"
 alias latest='ls -lt | head -n 2 | awk '\''NR==2{print $NF}'\'
 
 alias nohistory='unset HISTFILE'
+
+alias ls='eza $eza_params'
+alias l='eza --git-ignore $eza_params'
+alias ll='eza --all --header --long $eza_params'
+alias llm='eza --all --header --long --sort=modified $eza_params'
+alias la='eza -lbhHigUmuSa'
+alias lx='eza -lbhHigUmuSa@'
+alias lt='eza --tree $eza_params'
+alias tree='eza --tree $eza_params'
 
 ## diff dir a and b, run `diffdir a b DIFF`
 alias diffdir="diff --exclude '*.txt' --exclude '*.pkl' --exclude '*__pycache__*'"

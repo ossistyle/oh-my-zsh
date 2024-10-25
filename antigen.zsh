@@ -9,13 +9,13 @@ antigen bundles <<EOBUNDLES
     git
     docker
     docker-compose
+    Aloxaf/fzf-tab
+    unixorn/fzf-zsh-plugin@main
     zsh-eza
     zsh-users/zsh-syntax-highlighting
     zsh-users/zsh-autosuggestions
-    zsh-users/zsh-completions
-    #Aloxaf/fzf-tab
-    #unixorn/fzf-zsh-plugin@main
-    #junegunn/fzf
+    # zsh-users/zsh-completions    
+    junegunn/fzf
 EOBUNDLES
 
 # Load the theme.

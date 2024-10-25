@@ -13,14 +13,14 @@ bindkey '^D' _exit_zsh_if_empty
 # ctrl + p/n for previous/next command
 # ctrl + m for enter
 # ctrl + k for kill line
-bindkey '^F' forward-word
-bindkey '^B' backward-word
-bindkey '^H' backward-char
-bindkey '^L' forward-char
-bindkey '^?' backward-delete-char
-bindkey "^X^X" backward-delete-char
+# bindkey '^F' forward-word
+# bindkey '^B' backward-word
+# bindkey '^H' backward-char
+# bindkey '^L' forward-char
+# bindkey '^?' backward-delete-char
+# bindkey "^X^X" backward-delete-char
 
-# plugins
-autoload -Uz jump-target
-zle -N jump-target
-bindkey "^J" jump-target  # using ctrl+j to jump to target character
+# # plugins
+# autoload -Uz jump-target
+# zle -N jump-target
+# bindkey "^J" jump-target  # using ctrl+j to jump to target character

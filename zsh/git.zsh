@@ -135,7 +135,8 @@ Please generate a concise, one-line commit message for these changes.
                     return 1
                 fi
                 ;;
-            "r"|"R" )  # r is built-in command in zsh
+            "r"|"R" )  
+                # r is built-in command in zsh
                 echo "Regenerating commit message..."
                 commit_message=$(generate_commit_message)
                 ;;
