@@ -43,7 +43,7 @@ git_llm_commit() {
     # reference: https://gist.github.com/karpathy/1dd0294ef9567971c1e4348a90d69285
     local model_name="$1"
     if [ -z "$1" ]; then
-        model_name="qwen2:7b"
+        model_name="qwen2:7b" # tavernari/git-commit-message
     fi
 
     generate_commit_message() {
