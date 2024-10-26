@@ -12,6 +12,7 @@ targets = \
 	docker \
 	fdfind \
 	eza \
+	ollama \
 
 .PHONY: all $(targets)
 

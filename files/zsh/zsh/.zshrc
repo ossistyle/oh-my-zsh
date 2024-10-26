@@ -14,12 +14,16 @@ zle_highlight=('paste:none')
 setopt INTERACTIVE_COMMENTS
 
 # ==== Plugins ====
-source $ZDOTDIR/utils.zsh
+source utils.zsh
 
 plugins=(
+    git
     zsh-autosuggestions
     zsh-syntax-highlighting
     fzf-tab
+    docker
+    docker-compose
+    eza
 )
 
 for plugin in ${plugins[@]}; do
@@ -28,11 +32,15 @@ done
 
 # ==== Addons ====
 addons=(
-    git  
+    base
+    git
+    alias
+    keybindings
+    complete  
 )
 
 for addon in ${addons[@]}; do
-  safe_source $ZDOTDIR/$addon.zsh
+  safe_source $addon.zsh
 done
 
 # ==== Theme ====
@@ -49,7 +57,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-safe_source $ZDOTDIR/p10k.zsh
+safe_source p10k.zsh
 
 # # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

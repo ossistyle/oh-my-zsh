@@ -1,26 +1,30 @@
-# autoload -U compinit && compinit -u
+add_plugin() {
+  if [[ ! -d $XDG_DATA_HOME/zsh/plugins/$1 ]]; then
+    echo -e "\e[93m \e[97mPlugin $1 does not exist"
+    return
+  fi
 
-# # compdef
-# compdef _src src
-# compdef _conf conf
-# compdef _act_venv act_venv rm_venv
-# compdef _bluetooth_device bluetooth_conn bluetooth_disconn
-# compdef _sftp_upload sftp_upload
+  source $XDG_DATA_HOME/zsh/plugins/$1/$1.plugin.zsh
+}
 
-# compdef _git ga=git-add
-# compdef _git gc=git-commit
-# compdef _git gp=git-push
-# compdef _git gpp=git-pull
-# compdef _git gf=git-fetch
-# compdef _git gco=git-checkout  # make completion work for gco, though alias also in git plugin
-# compdef _git gb=git-branch
-# compdef _git gr=git-remote
+load_theme() {
+  if [[ ! -d $XDG_DATA_HOME/zsh/themes/$1 ]]; then
+    echo -e "\e[93m \e[97mTheme $1 does not exist"
+    return
+  fi
 
-# # specific filetype
-# _pic() { _files -g '*.(jpg|png|bmp|gif|ppm|pbm|jpeg|xcf|ico)(-.)' }
-# compdef _pic gimp
-# compdef _pic imgcat
-# compdef _pic feh
+  source $XDG_DATA_HOME/zsh/themes/$1/$1.zsh-theme
+}
 
-# compdef _pip pip2
-# compdef _pip pip3
+function safe_source() { [ -f  "$1" ] && source "$1" }
+# function safe_export_path() { [[ -d $1 ]] && export PATH=$1:$PATH }
+function safe_add_fpath() { [[ -d "$1" ]] && fpath=("$1" $fpath) }  # NOTE: don't quote fpath here
+function safe_export_path() {
+    if [[ -d "$1" ]]; then
+        if [[ ":$PATH:" == *":$1:"* ]]; then
+            echo "$1 already exists in PATH"
+        else
+            export PATH="$1:$PATH"
+        fi
+    fi
+}

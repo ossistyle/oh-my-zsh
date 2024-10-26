@@ -123,8 +123,8 @@ symlink () {
     info "$link backed up"
   fi
 
-  local symlink_dir=$(dirname "$link")
-  [[ ! -d $symlink_dir ]] && mkdir -p "$symlink_dir"
+  local symlink_dir=$(dirname "$file")  
+  [[ ! -d "$file" ]] && mkdir -p "$symlink_dir"
 
   ln -snf "$file" "$link"
   success
