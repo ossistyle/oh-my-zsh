@@ -103,12 +103,8 @@ install_zsh_tools() {
     os_install fontconfig
     os_install unzip
 
-    # neovim deps
-    install_neovim_deps
-
     download_font meslo
 
-    install_neovim
     install_fd
     install_zoxide
     install_eza

@@ -162,7 +162,7 @@ os_install()
     elif [ "$OS_DISTRIBUTION" = "ubuntu" ]; then        
        sudo apt-get update -y 1> /dev/null
        sudo apt-get install "${@}" -yf | grep -E "upgraded"
-       sudo apt autoremove 
+       sudo apt autoremove -y 1> /dev/null
     fi
 }
 
@@ -179,10 +179,4 @@ install_miniconda()
         rm "$HOME"/miniconda.sh
     fi
     "$HOME"/miniconda3/bin/conda init zsh
-}
-
-update_confs()
-{
-  update_neovim_conf
-  update_zsh_conf
 }

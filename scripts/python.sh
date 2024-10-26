@@ -55,7 +55,8 @@ setup_env() {
   cp -rf "$HOME"/Python-$devver/* "$devenv"
   rm -rf "$HOME"/Python-$devver
 
-  cd "$devenv" && ./configure --enable-optimizations --with-ensurepip=install && make && sudo make install
+  info "Build python ..."
+  cd "$devenv" && ./configure --enable-optimizations --with-ensurepip=install 1> /dev/null && make 1> /dev/null && sudo make install 1> /dev/null
 
   #   info "Installing venv..."
   #   "$HOME/.local/bin/python$devver" "$HOME"/virtualenv.pyz "$devenv" --quiet
