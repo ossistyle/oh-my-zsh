@@ -44,21 +44,47 @@
 # zstyle ':omz:plugins:docker' legacy-completion yes
 
 # export FZF_DEFAULT_OPTS='--bind ctrl-d:page-down,ctrl-u:page-up --height 60%'  # like vim
-export FZF_DEFAULT_OPTS="\
-  --marker='❯' \
-  --pointer='❯' \
-  --prompt='❯ ' \
-  --scrollbar='│' \
-  --cycle \
-  --layout='reverse' \
-  --info='right' \
-  --bind='ctrl-d:page-down' \
-  --bind='ctrl-u:page-up' \
-  --preview-window='right:50%,wrap' \
-  --height='100%'"
+# export FZF_DEFAULT_OPTS="\
+#   --marker='❯' \
+#   --pointer='❯' \
+#   --prompt='❯ ' \
+#   --scrollbar='│' \
+#   --cycle \
+#   --layout='reverse' \
+#   --info='right' \
+#   --bind='ctrl-d:page-down' \
+#   --bind='ctrl-u:page-up' \
+#   --preview-window='right:50%,wrap' \
+#   --height='100%'"
 
-LESSOPEN='|$HOME/.zsh/functions/less_filter.sh %s'
-export LESSOPEN
+export FZF_DEFAULT_OPTS="\
+  --multi \
+  --height='80%' \
+  --border='sharp' \
+  --scrollbar='│' \
+  --preview='tree -C {}' \
+  --preview-window='45%,border-sharp' \
+  --prompt='Dirs > ' \
+  --bind='del:execute(rm -ri {+})' \
+  --bind='ctrl-p:toggle-preview' \
+  --bind='ctrl-d:change-prompt(Dirs > )' \
+  --bind='ctrl-d:+reload(find -type d)' \
+  --bind='ctrl-d:+change-preview(tree -C {})' \
+  --bind='ctrl-d:+refresh-preview' \
+  --bind='ctrl-f:change-prompt(Files > )' \
+  --bind='ctrl-f:+reload(find -type f)' \
+  --bind='ctrl-f:+change-preview(bat {})' \
+  --bind='ctrl-f:+refresh-preview' \
+  --bind='ctrl-a:select-all' \
+  --bind='ctrl-x:deselect-all' \
+  --header '
+  CTRL-D to display directories | CTRL-F to display files
+  CTRL-A to select all | CTRL-x to deselect all
+  ENTER to edit | DEL to delete
+  CTRL-P to toggle preview'"
+
+#LESSOPEN='|$HOME/.zsh/functions/less_filter.sh %s'
+#export LESSOPEN
 
 export FZF_COMPLETION_OPTS=" --cycle \
     --ansi \
@@ -73,8 +99,8 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 export FZF_COMPLETION_TRIGGER='~~'
 
 # options to fzf command
-zstyle ':fzf-tab:complete:z:*' fzf-preview 'less ${(Q)realpath}'
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'less ${(Q)realpath}'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'zi ${(Q)realpath}'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'zi ${(Q)realpath}'
 # zstyle ':fzf-tab:complete:eza:*' fzf-preview 'less ${(Q)realpath}'
 zstyle ':fzf-tab:*' continuous-trigger '/'
 zstyle ':fzf-tab:*' switch-group 'Left' 'Right'

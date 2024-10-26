@@ -32,8 +32,8 @@ zstyle ':omz:update' frequency 7
 
 setopt complete_aliases  # enable alias completion
 
-LESSOPEN="|/usr/local/bin/lesspipe.sh %s"; 
-export LESSOPEN
+#LESSOPEN="|/usr/local/bin/lesspipe.sh %s"; 
+#export LESSOPEN
 
 # zsh history settings
 export HISTFILE=$HOME/.zsh_history
@@ -64,6 +64,7 @@ plugins=(
     fzf-tab
     docker
     docker-compose
+    eza
 )
 
 # Load fastfetch

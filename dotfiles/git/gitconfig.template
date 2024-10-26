@@ -1,0 +1,56 @@
+[user]
+  name = FULL_NAME
+  email = GIT_EMAIL
+
+[core]
+  editor = nvim
+
+[merge]
+  tool = vimdiff
+
+[alias]
+  git = !git
+
+[credential]
+  helper = store
+
+[push]
+  default = simple
+
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+
+[color "diff"]
+  meta = "#fabd2f"
+  frag = "#d3869b"
+  old = "#fb4934"
+  new = "#b8bb26"
+
+[color "status"]
+  added = "#b8bb26"
+  changed = "#fabd2f"
+  untracked = "#fb4934"
+
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+
+[stash]
+  showStat = false
+  showPatch = true
+
+[delta]
+  features = side-by-side line-numbers navigate
+  syntax-theme = Monokai Extended
+  plus-style = "syntax #004d00"
+  minus-style = "syntax #4d0000"
+  line-numbers-plus-style = "#b8bb26"
+  line-numbers-minus-style = "#fb4934"
+  line-numbers-zero-style = "#665c54"
+
+[interactive]
+  diffFilter = delta --color-only
