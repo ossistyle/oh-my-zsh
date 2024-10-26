@@ -159,9 +159,10 @@ os_install()
     
     if [ "$OS_DISTRIBUTION" = "macos" ]; then
         brew install "${@}"
-    elif [ "$OS_DISTRIBUTION" = "ubuntu" ]; then
+    elif [ "$OS_DISTRIBUTION" = "ubuntu" ]; then        
        sudo apt-get update -y 1> /dev/null
-       sudo apt-get install "${@}" -y | grep -E "upgraded"
+       sudo apt-get install "${@}" -yf | grep -E "upgraded"
+       sudo apt autoremove 
     fi
 }
 

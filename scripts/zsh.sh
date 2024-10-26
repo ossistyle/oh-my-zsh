@@ -1,6 +1,6 @@
 #!/bin/env bash
 
-. ./helper.sh
+source scripts/helper.sh
 
 prepare_zsh() {
     os_install zsh
@@ -67,14 +67,14 @@ install_zoxide() {
 }
 
 install_eza() {
-    sudo apt install -y gpg
+    os_install gpg
     sudo mkdir -p /etc/apt/keyrings
     sudo rm -f /etc/apt/keyrings/gierens.gpg
     wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
     echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
     sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
     sudo apt update
-    os_install -y eza
+    os_install eza
 }
 
 install_ohmyzsh() {
@@ -82,12 +82,7 @@ install_ohmyzsh() {
 }
 
 install_fzf() {
-    if [ -d "$HOME/.fzf" ]; then
-        echo "fzf already installed"
-    else
-        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        "$HOME"/.fzf/install
-    fi
+    make fzf    
 }
 
 install_fd() {
@@ -103,7 +98,6 @@ install_zsh_tools() {
     os_install tree
     os_install btop
     os_install bat
-    os_install python3
     os_install ripgrep
     os_install pkgconf
     os_install fontconfig
@@ -130,16 +124,16 @@ update_zsh_conf() {
     header "Setting up neovim..."
 
     if [ -d "$HOME"/.zsh ]; then
-        echo "remove ~/.zsh dir"
+        info "remove $HOME/.zsh dir"
         rm -rf "$HOME"/.zsh
     fi
-    info "update ~/.zsh dir"
+    info "update $HOME/.zsh dir"
     cp zshrc "$HOME"/.zshrc
     info "update ~/.zsh file"
-    cp -r zsh "$HOME"/.zsh
+    cp -r "$DOTFILES_HOME"/zsh "$HOME"/.zsh
 
     if ! [ -f "$HOME/.zsh.local" ]; then
-        info "update zsh.local, for local usage"
+        info "update $HOME/.zsh.local, for local usage"
         cp zsh.local "$HOME"/.zsh.local
     fi
     success
