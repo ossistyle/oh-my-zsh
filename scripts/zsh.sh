@@ -6,7 +6,7 @@ prepare_zsh() {
     os_install zsh
     install_ohmyzsh
     cp zshrc "$HOME"/.zshrc
-    cp -r zsh "$HOME"/.zsh
+    cp -r "$DOTFILES_HOME"/zsh "$HOME"/.zsh
     # cp antigen.zsh $HOME/.antigen.zsh
     install_zsh_plugins
     install_zsh_theme
