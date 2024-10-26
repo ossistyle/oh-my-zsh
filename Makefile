@@ -10,6 +10,8 @@ targets = \
 	python \
 	nvim \
 	docker \
+	fdfind \
+	eza \
 
 .PHONY: all $(targets)
 

@@ -23,10 +23,10 @@ XDG_CONFIG_HOME=$HOME/.config
 XDG_DATA_HOME=$HOME/.local/share
 XDG_CACHE_HOME=$HOME/.cache
 
-DOTFILES_HOME=$HOME/dotfiles
+DOTFILES_HOME=$HOME/dotfiles/files
 
 # Prepare local paths
-. /etc/os-release
+source /etc/os-release
 
 get_os_distribution()
 {
@@ -155,28 +155,13 @@ clone () {
 
 os_install()
 {
-    header "Install package $* ..."
+    info "Install package $* ..."
     
     if [ "$OS_DISTRIBUTION" = "macos" ]; then
         brew install "${@}"
     elif [ "$OS_DISTRIBUTION" = "ubuntu" ]; then        
        sudo apt-get update -y 1> /dev/null
        sudo apt-get install "${@}" -yf | grep -E "upgraded"
-       sudo apt autoremove -y 1> /dev/null
+       sudo apt-get autoremove -y 1> /dev/null
     fi
-}
-
-install_miniconda()
-{
-    if [[ "$(uname)" == "Darwin" ]]; then  # macOS
-        mkdir -p "$HOME"/miniconda3
-        curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o "$HOME"/miniconda3/miniconda.sh
-        bash "$HOME"/miniconda3/miniconda.sh -b -u -p "$HOME"/miniconda3
-        rm -rf "$HOME"/miniconda3/miniconda.sh~
-    elif [[ "$(uname)" == "Linux" ]]; then  # Linux
-        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O "$HOME"/miniconda.sh
-        bash "$HOME"/miniconda.sh -b -p "$HOME"/miniconda
-        rm "$HOME"/miniconda.sh
-    fi
-    "$HOME"/miniconda3/bin/conda init zsh
 }

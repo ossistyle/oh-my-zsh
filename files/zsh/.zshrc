@@ -1,17 +1,59 @@
 # some utilities
 
-function safe_source() { [ -f  "$1" ] && source "$1" }
-# function safe_export_path() { [[ -d $1 ]] && export PATH=$1:$PATH }
-function safe_add_fpath() { [[ -d "$1" ]] && fpath=("$1" $fpath) }  # NOTE: don't quote fpath here
-function safe_export_path() {
-    if [[ -d "$1" ]]; then
-        if [[ ":$PATH:" == *":$1:"* ]]; then
-            echo "$1 already exists in PATH"
-        else
-            export PATH="$1:$PATH"
-        fi
-    fi
-}
+# ==== Settings ====
+export ZSH_DISABLE_COMPFIX=true
+
+# Disable CTRL-s from freezing your terminal's output.
+stty stop undef
+
+# Disable highlighting of pasted text
+zle_highlight=('paste:none')
+
+# ==== Options ====
+# Enable in-line comments
+setopt INTERACTIVE_COMMENTS
+
+# ==== Plugins ====
+safe_source $ZDOTDIR/utils.zsh
+
+plugins=(
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    fzf-tab
+    docker
+    docker-compose
+    eza
+)
+
+for plugin in ${plugins[@]}; do
+  add_plugin $plugin
+done
+
+# ==== Addons ====
+addons=(
+    base
+    git
+    alias
+    keybindings
+    complete  
+)
+
+for addon in ${addons[@]}; do
+  safe_source $addon.zsh
+done
+
+# ==== Theme ====
+ZSH_THEME=powerlevel10k
+P10K_THEME=lean
+# P10K_THEME=rainbow
+
+load_theme $ZSH_THEME
+
+for file in $HOME/.zsh/*.zsh; do
+    source $file
+done
+
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -19,6 +61,7 @@ function safe_export_path() {
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+safe_source p10k.zsh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -47,26 +90,6 @@ setopt HIST_NO_FUNCTIONS     # don't save function definitions in the history fi
 setopt SHARE_HISTORY         # share history between all sessions
 unsetopt EXTENDED_HISTORY    # disable the extended history format that includes timestamp information for each command
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    git
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    fzf-tab
-    docker
-    docker-compose
-    eza
-)
-
 # Load fastfetch
 #if [[ -o interactive ]]; then
 #     fastfetch
@@ -75,11 +98,8 @@ plugins=(
 # alias and self defined function
 safe_export_path $HOME/.local/bin >/dev/null
 safe_source $ZSH/oh-my-zsh.sh
-safe_source $HOME/.zsh/base.zsh
 
-for file in $HOME/.zsh/*.zsh; do
-    source $file
-done
+
 
 safe_add_fpath "$HOME/.zsh/Completion"
 safe_add_fpath "$HOME/.zsh/functions"
