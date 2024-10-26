@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. scripts/helper.sh
+source scripts/helper.sh
 
 install_git() {
   header "Installing git..."

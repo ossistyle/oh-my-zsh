@@ -7,7 +7,6 @@ targets = \
 	zsh \
 	fzf \
 	btop \
-	# pyenv 
 	python \
 	nvim \
 	docker \

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. scripts/helper.sh
+source scripts/helper.sh
 
 devenv=$HOME/.python
 
@@ -51,15 +51,12 @@ setup_env() {
   local pwd=$PWD
   header "$PWD"
   info "Switch to $devenv"
-  cd "$devenv" || exit
-
-  info "Configure python"
-  "$devenv"/configure --enable-optimizations --with-ensurepip=install
+  cd "$devenv" && ./configure --enable-optimizations --with-ensurepip=install && make && sudo make install
 
   header "$PWD"
 
   exit
-  make -j 8
+  make
 
   sudo make install
 
@@ -69,7 +66,7 @@ setup_env() {
   #   "$HOME/.local/bin/python$devver" "$HOME"/virtualenv.pyz "$devenv" --quiet
   #   rm "$HOME"/virtualenv.pyz
 
-  success
+  success 
 }
 
 install_python_tools() {

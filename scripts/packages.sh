@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-. scripts/helper.sh
+source scripts/helper.sh
 
 packages=(
   curl
@@ -12,4 +12,4 @@ packages=(
 )
 
 header "Installing packages..."
-os_install ${packages[@]}
+os_install "${packages[@]}"

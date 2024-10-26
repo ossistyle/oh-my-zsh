@@ -1,6 +1,6 @@
 #!/bin/env bash
 
-. scripts/helper.sh
+source scripts/helper.sh
 
 install_docker () {
   header "Installing docker..."

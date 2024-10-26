@@ -155,7 +155,7 @@ clone () {
 
 os_install()
 {
-    header "Install package ${@} ..."
+    header "Install package $* ..."
     
     if [ "$OS_DISTRIBUTION" = "macos" ]; then
         brew install "${@}"
@@ -168,16 +168,16 @@ os_install()
 install_miniconda()
 {
     if [[ "$(uname)" == "Darwin" ]]; then  # macOS
-        mkdir -p $HOME/miniconda3
-        curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o $HOME/miniconda3/miniconda.sh
-        bash $HOME/miniconda3/miniconda.sh -b -u -p $HOME/miniconda3
-        rm -rf $HOME/miniconda3/miniconda.sh~
+        mkdir -p "$HOME"/miniconda3
+        curl https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-arm64.sh -o "$HOME"/miniconda3/miniconda.sh
+        bash "$HOME"/miniconda3/miniconda.sh -b -u -p "$HOME"/miniconda3
+        rm -rf "$HOME"/miniconda3/miniconda.sh~
     elif [[ "$(uname)" == "Linux" ]]; then  # Linux
-        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O $HOME/miniconda.sh
-        bash $HOME/miniconda.sh -b -p $HOME/miniconda
-        rm $HOME/miniconda.sh
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O "$HOME"/miniconda.sh
+        bash "$HOME"/miniconda.sh -b -p "$HOME"/miniconda
+        rm "$HOME"/miniconda.sh
     fi
-    $HOME/miniconda3/bin/conda init zsh
+    "$HOME"/miniconda3/bin/conda init zsh
 }
 
 update_confs()
