@@ -1,3 +1,6 @@
+#!/bin/env bash
+
+source scripts/helper.sh
 
 install_fd() {
     os_install fd-find

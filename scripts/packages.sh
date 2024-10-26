@@ -9,6 +9,7 @@ packages=(
   jq
   bc
   shellcheck
+  bat
 )
 
 header "Installing packages..."

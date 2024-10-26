@@ -28,7 +28,8 @@ done
 
 # ==== Addons ====
 addons=(
-    git  
+    git
+    fzf-defaults
 )
 
 for addon in ${addons[@]}; do
