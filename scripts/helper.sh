@@ -53,7 +53,7 @@ get_os_version() {
 }
 
 OS_DISTRIBUTION=$(get_os_distribution)
-OS_VERSION=$(get_os_version)
+# OS_VERSION=$(get_os_version)
 
 setup_env () {
   [[ ! -d $HOME/.local/bin ]] && mkdir -p "$HOME"/.local/bin

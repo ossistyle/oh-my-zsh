@@ -16,7 +16,19 @@ install_deps() {
     libreadline-dev
     libffi-dev
     wget
-    python3
+    make 
+    build-essential 
+    libssl-dev 
+    zlib1g-dev
+    libbz2-dev 
+    libreadline-dev 
+    libsqlite3-dev 
+    curl 
+    llvm
+    libncurses5-dev 
+    libncursesw5-dev 
+    xz-utils 
+    tk-dev
   )
 
   os_install "${packages[@]}"
@@ -33,12 +45,7 @@ setup_env() {
   fi
 
   download https://www.python.org/ftp/python/"$devver"/Python-"$devver".tgz "$HOME"
-  sudo apt update
-  sudo apt upgrade
-  sudo apt install -y make build-essential libssl-dev zlib1g-dev \
-    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-    libncurses5-dev libncursesw5-dev xz-utils tk-dev
-
+  
   rm -rf "$devenv"
   mkdir -p "$devenv"
   rm -rf "$HOME"/Python-$devver
@@ -48,19 +55,7 @@ setup_env() {
   cp -rf "$HOME"/Python-$devver/* "$devenv"
   rm -rf "$HOME"/Python-$devver
 
-  local pwd=$PWD
-  header "$PWD"
-  info "Switch to $devenv"
   cd "$devenv" && ./configure --enable-optimizations --with-ensurepip=install && make && sudo make install
-
-  header "$PWD"
-
-  exit
-  make
-
-  sudo make install
-
-  cd "$pwd" || exit
 
   #   info "Installing venv..."
   #   "$HOME/.local/bin/python$devver" "$HOME"/virtualenv.pyz "$devenv" --quiet
@@ -86,7 +81,7 @@ install_python_tools() {
   )
 
   [[ ! $PATH == *$devenv/bin* ]] && export PATH=$devenv/bin:$PATH
-  pip install -U "${packages[@]}" | grep -E "installed"
+  pip3 install -U "${packages[@]}" | grep -E "installed"
 
   success
 }
